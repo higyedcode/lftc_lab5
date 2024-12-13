@@ -1,8 +1,9 @@
 import com.sun.jdi.IntegerType
+import java.io.File
 
 fun printTree(tree: List<ParsingTreeRow>, level: Int) {
     for (i in tree.size - 1 downTo 0) {
-        val children = tree.filter { it.parent == i }.sortedBy { it.rightSibling == -1 }    
+        val children = tree.filter { it.parent == i }.sortedBy { it.rightSibling == -1 }
         for (j in 0 until tree.size - i + 1)
             print("   ")
         for (child in children)
@@ -15,7 +16,7 @@ fun printTree(tree: List<ParsingTreeRow>, level: Int) {
 }
 
 fun main() {
-    val g = Grammar("src/main/resources/g1.in")
+    val g = Grammar("src/main/resources/g2.in")
     println("Nonterminals: ${g.nonTerminals}")
     println("Terminals: ${g.terminals}")
     println("Starting symbol: ${g.startingSymbol}")
@@ -34,11 +35,17 @@ fun main() {
     println(g.getEnrichedGrammar().productionSet.getOrderedProductions())
     println(lr.getParsingTable())
 
+
     try {
-        val parseTree = lr.parse(listOf("a", "b", "b", "c")).sortedBy { it.index }
+        val input = File("src/main/resources/input.txt").readLines()
+            .flatMap { it.split("\\s+".toRegex()) }
+            .filter { it.isNotBlank() }
+
+//        val parseTree = lr.parse(listOf("a", "b", "b", "c")).sortedBy { it.index }
+        val parseTree = lr.parse(input).sortedBy { it.index }
         for (row in parseTree)
             println("Row ${row.index}: symbol ${row.info}, parent: ${row.parent}, rightSibling: ${row.rightSibling}")
-        println("        ${parseTree.get(parseTree.size - 1).info}  ")
+        println("        ${parseTree.last().info}  ")
         printTree(parseTree, 0)
     } catch (e: Exception) {
         println(e.message)

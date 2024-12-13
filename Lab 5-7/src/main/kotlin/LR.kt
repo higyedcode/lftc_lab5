@@ -159,6 +159,6 @@ class LR(private val grammar: Grammar) {
                 else -> throw Exception(tableValue.action.toString())
             }
         }
-        throw Exception("How did you even get here?")
+        throw Exception("Unhandled error in parsing")
     }
 }

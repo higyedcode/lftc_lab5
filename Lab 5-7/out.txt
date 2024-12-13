@@ -1,0 +1,48 @@
+Nonterminals: [S, A]
+Terminals: [a, b, c]
+Starting symbol: S
+Production set: {[S]=[[a, A]], [A]=[[b, A], [c]]}
+It is a cfg
+States
+0: SHIFT - [S0 -> .S, S -> .aA]
+1: ACCEPT - [S0 -> S.]
+2: SHIFT - [S -> a.A, A -> .bA, A -> .c]
+3: REDUCE - [S -> aA.]
+4: SHIFT - [A -> b.A, A -> .bA, A -> .c]
+5: REDUCE - [A -> c.]
+6: REDUCE - [A -> bA.]
+State transitions
+(0, S) -> 1
+(0, a) -> 2
+(2, A) -> 3
+(2, b) -> 4
+(2, c) -> 5
+(4, A) -> 6
+(4, b) -> 4
+(4, c) -> 5
+[(S, [a, A]), (A, [b, A]), (A, [c]), (S0, [S])]
+0: SHIFT {S=1, a=2}
+1: ACCEPT
+2: SHIFT {A=3, b=4, c=5}
+3: REDUCE 0
+4: SHIFT {A=6, b=4, c=5}
+5: REDUCE 2
+6: REDUCE 1
+
+Row 0: symbol a, parent: 7, rightSibling: 6
+Row 1: symbol b, parent: 6, rightSibling: 5
+Row 2: symbol b, parent: 5, rightSibling: 4
+Row 3: symbol c, parent: 4, rightSibling: -1
+Row 4: symbol A, parent: 5, rightSibling: -1
+Row 5: symbol A, parent: 6, rightSibling: -1
+Row 6: symbol A, parent: 7, rightSibling: -1
+Row 7: symbol S, parent: -1, rightSibling: -1
+        S  
+      a    A    
+         b    A    
+            b    A    
+               c    
+                  
+                     
+                        
+                           
